@@ -1,0 +1,12 @@
+#include <stdio.h>
+
+int main(void) {
+  char *line = NULL;
+  size_t len = 0;
+
+  ssize_t size = getline(&line, &len, stdin);
+  printf("%s\n", line);
+  
+  free(line);
+  return 0;
+}

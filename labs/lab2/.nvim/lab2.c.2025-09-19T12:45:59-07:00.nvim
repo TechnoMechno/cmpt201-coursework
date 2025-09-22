@@ -1,0 +1,41 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <sys/types.h>
+#include <sys/wait.h>
+#include <unistd.h>
+
+int main(int argc, char **argv) {
+  (void)argc; (void)argv;
+
+  char *line = NULL;
+  size_t n;
+
+  // Loop to get command
+  
+  // create child first, so exec doesnt terminate parent.
+  pid_t pid = fork();
+
+  if(pid != 0){ // We are in parent process
+    int status = 0;
+    
+    if (waitpid(pid, &status, 0) == -1){
+      perror("waitpid");
+      exit(EXIT_FAILURE);
+    }
+
+    if (WIFEXITED(status)){
+      printf("Child exited.\n");
+    }
+    else{
+      // in child
+      if (execl(line, line, (char *)NULL) == -1){
+        perror("execl");
+        exit(EXIT_FAILURE);
+
+      }
+    }
+  }
+  
+  
+ free(line); 
+}

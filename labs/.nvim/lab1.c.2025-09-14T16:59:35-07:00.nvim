@@ -1,0 +1,24 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(void) {
+  char *line = NULL;
+  size_t len = 0;
+
+  ssize_t size = getline(&line, &len, stdin);
+  printf("%s\n", line);
+
+  // char *strtok_r(char *str, const char *delim, char **saveptr);
+  //
+
+  char* token = NULL;
+  char* saveptr = NULL;
+
+  token = strtok_r(line, " ", &saveptr);
+
+  printf("%s\n", token);
+  free(line);
+  free(token);
+  free(saveptr);
+  return 0;
+}
